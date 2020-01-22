@@ -25,11 +25,22 @@ class HomeController extends Controller {
         
         $p = new Posts();
         
-        if(isset($_POST["msg"]) && $_POST["msg"]) {
+        if(isset($_POST["msg"]) && !empty($_POST["msg"])) {
             $msg = $_POST['msg'];
             
             
-            $p->inserirPost($msg);
+            $id_post = $p->inserirPost($msg);
+            
+            
+            if(isset($_FILES['imagem_post']) && !empty($_FILES['imagem_post'])){
+                
+                $img = $_FILES['imagem_post'];
+                $nome_do_arquivo = md5(time().rand(0,99));
+                
+                move_uploaded_file($img['tmp_name'], "Images/posts/".$nome_do_arquivo);
+                
+                $p->inserirImagemPost($nome_do_arquivo, $id_post);
+            }
             header('Location:'.BASE_URL);
         }
 
