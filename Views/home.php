@@ -1,5 +1,4 @@
 
-
 <aside>
     Seguindo: <?php echo $qt_seguindo;?> <br>
     Seguidores: <?php echo $qt_seguidores;?><br><br>
@@ -24,7 +23,8 @@
 <div class="container divisao"></div>
 <div class="container">
     <?php foreach ($feed as $item): ?>
-
+    
+       <?php $id_curtidores = array($item['id_curtidores']); ?>
         <strong>
             <a href="<?php echo BASE_URL; ?>perfil/mostrar/<?php echo $item['id_usuario']?>    ">
                 <?php if (!empty($item['url'])) :?>
@@ -37,17 +37,25 @@
                 
                 </a>
             
-    </strong><br>
+        </strong><br>
+    
         <?php echo $item['mensagem']; ?><br>
+    
     
         <?php if(!empty($item['url_post'])): ?>
             <img src="<?php echo BASE_URL; ?>Images/posts/<?php echo $item['url_post'];?>">
         <?php endif; ?>
-    <?php if($item['id_usuario'] == $_SESSION['twlg']): ?>
-        <a href="<?php echo BASE_URL?>post/descurtir/<?php echo $item[0]; ?>">Descurtir</a>
-    <?php else: ?>
-        <a href="<?php echo BASE_URL?>post/curtir/<?php echo $item[0]; ?>">Curtir</a>
-    <?php endif; ?>
+    
+        <?php if($item['id_usuario'] == $_SESSION['twlg']): ?>
+            <a href=" <?php echo BASE_URL; ?>post/delete/<?php echo $item['id'];?> ">Deletar Post</a><br>
+        
+        <?php endif; ?>
+        
+        <?php if(!empty($item['id_curtidores']) && in_array($_SESSION['twlg'], $id_curtidores)): ?>
+            <a href="<?php echo BASE_URL?>post/descurtir/<?php echo $item[0]; ?>">Descurtir</a><br>
+        <?php else: ?>
+            <a href="<?php echo BASE_URL?>post/curtir/<?php echo $item[0]; ?>">Curtir</a>
+        <?php endif; ?>
         <hr>
         
         

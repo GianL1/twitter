@@ -15,9 +15,14 @@ class PerfilController extends Controller {
             'nome' => ''
         );
         
+        $u = new Usuarios($_SESSION['twlg']);
         $pf = new Perfil();
+        
         $dados['perfil'] = $pf->getPerfil($id_usuario);
         $dados['nome'] = $pf->getDadosLogado($_SESSION['twlg']);
+        $dados['thumb'] = $u->getThumb();
+        
+        
         
         $this->loadTemplate('perfil', $dados);
     }
@@ -27,10 +32,11 @@ class PerfilController extends Controller {
             'nome' => ''
         );
         
-        $u = new Usuarios();
+        $u = new Usuarios($_SESSION['twlg']);
         
         $dados['id_user'] = $_SESSION['twlg'];
         $dados['nome'] = $u->getNome();
+        $dados['thumb'] = $u->getThumb();
         
         
         if(isset($_FILES['foto']) && !empty($_FILES['foto'])){

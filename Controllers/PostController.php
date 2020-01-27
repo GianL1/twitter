@@ -13,4 +13,16 @@ class PostController extends Controller {
         
         header("Location: ". BASE_URL);
     }
+    
+    public function descurtir($id_post) {
+        $p = new Posts();
+        $p->descurtirPost($id_post);
+        header("Location: ". BASE_URL);
+    }
+    
+    public function delete($id_post) {
+        $p = new Posts();
+        $p->deletarPost($id_post);
+        header("Location: ". BASE_URL);
+    }
 }

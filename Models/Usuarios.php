@@ -114,7 +114,7 @@ class Usuarios extends Model {
         if($sql->rowCount() > 0) {
             $array = $sql->fetch();
         }else {
-            $array = 'default.jpg';
+            $array['url'] = 'default.jpg';
         }
         
         return $array['url'];

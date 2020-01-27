@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 20-Jan-2020 às 14:20
+-- Tempo de geração: 27-Jan-2020 às 06:34
 -- Versão do servidor: 10.4.6-MariaDB
 -- versão do PHP: 7.3.8
 
@@ -25,11 +25,36 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `curtidas`
+--
+
+CREATE TABLE `curtidas` (
+  `id` int(11) NOT NULL,
+  `id_post` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `imagem_perfil`
 --
 
 CREATE TABLE `imagem_perfil` (
   `id` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `url` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `imagem_post`
+--
+
+CREATE TABLE `imagem_post` (
+  `id` int(11) NOT NULL,
+  `id_post` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `url` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -77,9 +102,21 @@ CREATE TABLE `usuarios` (
 --
 
 --
+-- Índices para tabela `curtidas`
+--
+ALTER TABLE `curtidas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `imagem_perfil`
 --
 ALTER TABLE `imagem_perfil`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `imagem_post`
+--
+ALTER TABLE `imagem_post`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -105,9 +142,21 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de tabela `curtidas`
+--
+ALTER TABLE `curtidas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `imagem_perfil`
 --
 ALTER TABLE `imagem_perfil`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `imagem_post`
+--
+ALTER TABLE `imagem_post`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

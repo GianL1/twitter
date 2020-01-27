@@ -35,7 +35,7 @@ class HomeController extends Controller {
             if(isset($_FILES['imagem_post']) && !empty($_FILES['imagem_post'])){
                 
                 $img = $_FILES['imagem_post'];
-                $nome_do_arquivo = md5(time().rand(0,99));
+                $nome_do_arquivo = md5(time().rand(0,99)).'.png';
                 
                 move_uploaded_file($img['tmp_name'], "Images/posts/".$nome_do_arquivo);
                 
@@ -45,6 +45,7 @@ class HomeController extends Controller {
         }
 
         $u = new Usuarios($_SESSION['twlg']);
+        
         $dados['nome'] = $u->getNome();
         $dados['qt_seguindo'] = $u->getCountSeguidos();
         $dados['qt_seguidores'] = $u->getCountSeguidores();

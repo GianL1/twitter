@@ -22,10 +22,13 @@ class Posts extends Model {
         $array = array();
         
         if(count($lista) > 0) {
-            $sql = $this->pdo->query("SELECT *, (SELECT nome FROM usuarios WHERE usuarios.id = posts.id_usuario) as nome, 
-			                                     (SELECT url FROM imagem_post WHERE imagem_post.id_post = posts.id) as url_post FROM posts 
-            LEFT JOIN imagem_perfil ON posts.id_usuario = imagem_perfil.id_usuario 
-            LEFT JOIN curtidas ON posts.id = curtidas.id_post WHERE posts.id_usuario IN(".implode(',', $lista).") ORDER BY posts.data_post DESC LIMIT ".$limit);
+            $sql = $this->pdo->query("SELECT posts.id, data_post, posts.id_usuario, mensagem, 
+                                        (SELECT nome FROM usuarios WHERE usuarios.id = posts.id_usuario) as nome, 
+                                        (SELECT url FROM imagem_post WHERE imagem_post.id_post = posts.id) as url_post,
+                                        (SELECT id_usuario FROM curtidas WHERE curtidas.id_post = posts.id) as id_curtidores
+                                        FROM posts LEFT JOIN imagem_perfil ON posts.id_usuario = imagem_perfil.id_usuario 
+                                        LEFT JOIN curtidas ON posts.id = curtidas.id_post 
+                                        WHERE posts.id_usuario IN(".implode(',', $lista).") ORDER BY posts.data_post DESC LIMIT ".$limit);
             
             if($sql->rowCount() > 0){
                 $array = $sql->fetchAll();
@@ -55,5 +58,44 @@ class Posts extends Model {
         $sql->bindValue(":id_usuario", $id_usuario);
         $sql->execute();
         
+    }
+    
+    public function descurtirPost($id_post) {
+        
+        $id_usuario = $_SESSION['twlg'];
+        
+        $sql = $this->pdo->prepare("DELETE FROM curtidas WHERE id_usuario = :id_usuario");
+        $sql->bindValue(":id_usuario", $id_usuario);
+        $sql->execute();
+    }
+    
+    public function deletarPost($id_post) {
+        
+        
+        
+        $sql = $this->pdo->prepare("DELETE FROM posts WHERE id = :id_post");
+        $sql->bindValue(":id_post",$id_post);
+        $sql->execute();
+        
+        $sql = $this->pdo->prepare("SELECT url from imagem_post WHERE id_post = :id_post");
+        $sql->bindValue(":id_post",$id_post);
+        $sql->execute();
+        
+        if ($sql->rowCount() > 0) {
+            $url = $sql->fetch();
+            $filename ='Images/posts/'.$url['url'];
+            
+            unlink($filename);
+        }
+        
+        $sql = $this->pdo->prepare("DELETE FROM imagem_post WHERE id_post = :id_post");
+        $sql->bindValue(":id_post",$id_post);
+        $sql->execute();
+    }
+    
+    public function getIdCurtidores() {
+        $sql = $this->pdo->prepare("SELECT id_usuario FROM curtidas WHERE id_post = :id_post");
+        $sql->bindValue(":id_post", $id_post);
+        $sql->execute();
     }
 }
