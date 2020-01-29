@@ -25,9 +25,10 @@ class Posts extends Model {
             $sql = $this->pdo->query("SELECT posts.id, data_post, posts.id_usuario, mensagem, 
                                         (SELECT nome FROM usuarios WHERE usuarios.id = posts.id_usuario) as nome, 
                                         (SELECT url FROM imagem_post WHERE imagem_post.id_post = posts.id) as url_post,
-                                        (SELECT id_usuario FROM curtidas WHERE curtidas.id_post = posts.id) as id_curtidores
-                                        FROM posts LEFT JOIN imagem_perfil ON posts.id_usuario = imagem_perfil.id_usuario 
-                                        LEFT JOIN curtidas ON posts.id = curtidas.id_post 
+                                        (SELECT id_usuario FROM curtidas WHERE curtidas.id_post = posts.id) as id_curtidores,
+                                        (SELECT COUNT(*) FROM curtidas WHERE curtidas.id_post = posts.id ) as curtidas
+                                        FROM posts 
+                                        LEFT JOIN imagem_perfil ON posts.id_usuario = imagem_perfil.id_usuario 
                                         WHERE posts.id_usuario IN(".implode(',', $lista).") ORDER BY posts.data_post DESC LIMIT ".$limit);
             
             if($sql->rowCount() > 0){
@@ -93,9 +94,6 @@ class Posts extends Model {
         $sql->execute();
     }
     
-    public function getIdCurtidores() {
-        $sql = $this->pdo->prepare("SELECT id_usuario FROM curtidas WHERE id_post = :id_post");
-        $sql->bindValue(":id_post", $id_post);
-        $sql->execute();
-    }
+    
+    
 }

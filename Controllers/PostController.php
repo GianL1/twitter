@@ -25,4 +25,10 @@ class PostController extends Controller {
         $p->deletarPost($id_post);
         header("Location: ". BASE_URL);
     }
+    
+    public function getCountCurtidas() {
+        $p = new Posts();
+        $curtidas = $p->getCountCurtidas($_SESSION['twlg']);
+        return $curtidas;
+    }
 }

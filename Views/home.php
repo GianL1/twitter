@@ -55,7 +55,9 @@
             <a href="<?php echo BASE_URL?>post/descurtir/<?php echo $item[0]; ?>">Descurtir</a><br>
         <?php else: ?>
             <a href="<?php echo BASE_URL?>post/curtir/<?php echo $item[0]; ?>">Curtir</a>
-        <?php endif; ?>
+        <?php endif; ?> <br>
+    
+        Curtidas: <?php echo $item['curtidas']; ?>
         <hr>
         
         

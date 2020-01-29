@@ -52,8 +52,10 @@ class HomeController extends Controller {
         $dados['sugestao'] = $u->getUsuarios(5);
         $dados['thumb'] = $u->getThumb();
         
+        
         $lista = $u->getSeguidos();
         $lista[] = $_SESSION['twlg'];
+        
         
         $dados['feed'] = $p->getFeed($lista, 10);
         $this->loadTemplate('home', $dados);
