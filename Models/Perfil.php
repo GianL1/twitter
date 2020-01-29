@@ -9,7 +9,13 @@ class Perfil extends Model {
     public function getPerfil($id_perfil) {
         $array = array();
 
-        $sql = $this->pdo->prepare("SELECT usuarios.id, usuarios.nome, posts.mensagem, imagem_perfil.url as url_perfil, imagem_post.url as url_post FROM usuarios LEFT JOIN posts ON posts.id_usuario = usuarios.id LEFT JOIN imagem_perfil ON usuarios.id = imagem_perfil.id_usuario LEFT JOIN imagem_post ON usuarios.id = imagem_post.id_usuario WHERE usuarios.id =  :id_perfil");
+        $sql = $this->pdo->prepare("SELECT usuarios.id, usuarios.nome, posts.mensagem, imagem_perfil.url as url_perfil, imagem_post.url as url_post, COUNT(curtidas.id) as curtidas_post, curtidas.id_usuario as id_curtidores
+        FROM usuarios 
+        LEFT JOIN posts ON posts.id_usuario = usuarios.id 
+        LEFT JOIN imagem_perfil ON usuarios.id = imagem_perfil.id_usuario 
+        LEFT JOIN imagem_post ON usuarios.id = imagem_post.id_usuario 
+        LEFT JOIN curtidas ON usuarios.id = curtidas.id_usuario 
+        WHERE usuarios.id = :id_perfil");
         $sql->bindValue(":id_perfil", $id_perfil);
         $sql->execute();  
 
