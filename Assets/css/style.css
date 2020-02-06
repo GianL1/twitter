@@ -1,6 +1,9 @@
 body{
     margin:0;
     font-family: Arial, Helvetica, sans-serif;
+    padding: 0;
+    background-color: #222;
+    color: white;
 }
 
 header {
@@ -9,6 +12,110 @@ header {
     width: 100%;
     
 }
+
+.main {
+    margin-left: 145px; /* Same as the width of the sidenav */
+
+    padding: 0px 10px;
+}
+
+.barra {
+    background-color:#333;
+    top: 0;
+    height: 100%;
+    width: 300px;
+    z-index: 1;
+    overflow-x: hidden;
+    position: fixed;
+    padding-top: 20px;
+    
+    
+}
+nav {
+    width: 100%;
+    top: 60px;
+    
+}
+
+nav a{
+    text-decoration: none;
+    display: block;
+}
+.link {
+    background-color: #494950;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    color: #f4f4f9;
+    border-bottom: 2px solid #222;
+    border-right: 1px solid #222;
+}
+.link:hover{
+    background-color:#00acee;
+}
+.tweet-content-box{
+    margin-top: 3px;
+    border-bottom: 4px solid gray;
+    border-right: 2px solid gray;
+    width: 500px;
+    height: 150px;
+}
+
+textarea {
+  width: 100%;
+  max-width: 500px;
+  width: 467px;
+  height: 30px;
+  display: block;
+  margin: 0 auto;
+  resize: none;
+  border-bottom: 1px solid; 
+  border-top: 1px solid darken;
+  border-right: 1px solid darken;
+  border-left: 1px solid darken;
+  padding: 15px;
+  outline: 0;
+}
+
+button{
+    background: #00ACEE;
+    border-radius: 0;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #0075a2;
+    width: 100px;
+    height: 40px;
+
+    float: right;
+
+    border-top: 1px solid #ffffff;
+    background:#00ACEE;
+    padding: 8.5px 17px;
+   
+    border-radius: 18px;
+    
+    color: white;
+    font-size: 12px;
+    text-decoration: none;
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+.post {
+    position: absolute;
+    top: 200px;
+    width: 500px;
+    margin-top: 5px;
+}
+#deletar_post{
+    float: right;
+}
+
+
+
+
+
+
+
 aside{
     position: fixed;
     right: 0;
@@ -30,23 +137,7 @@ aside{
     color: white;
     margin-left: 180px;
 }
-.container {
-    width: 568px;
-    height: 108px;
-    padding-left: 15px;
 
-}
-
-.divisao{
-    display: block;
-    margin-top: 5px;
-    height: 10px;
-    background-color: gray
-}
-
-a {
-    text-decoration: none;
-}
 .sugestoes {
     position: fixed;
     right: 0;

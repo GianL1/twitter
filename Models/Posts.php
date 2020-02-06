@@ -22,7 +22,7 @@ class Posts extends Model {
         $array = array();
         
         if(count($lista) > 0) {
-            $sql = $this->pdo->query("SELECT posts.id, data_post, posts.id_usuario, mensagem, 
+            $sql = $this->pdo->query("SELECT posts.id, posts.data_post, posts.id_usuario, posts.mensagem, 
                                         (SELECT nome FROM usuarios WHERE usuarios.id = posts.id_usuario) as nome, 
                                         (SELECT url FROM imagem_post WHERE imagem_post.id_post = posts.id) as url_post,
                                         (SELECT id_usuario FROM curtidas WHERE curtidas.id_post = posts.id) as id_curtidores,
@@ -65,7 +65,8 @@ class Posts extends Model {
         
         $id_usuario = $_SESSION['twlg'];
         
-        $sql = $this->pdo->prepare("DELETE FROM curtidas WHERE id_usuario = :id_usuario");
+        $sql = $this->pdo->prepare("DELETE FROM curtidas WHERE id_post = :id_post AND id_usuario = :id_usuario");
+        $sql->bindValue(":id_post", $id_post);
         $sql->bindValue(":id_usuario", $id_usuario);
         $sql->execute();
     }
@@ -91,6 +92,10 @@ class Posts extends Model {
         
         $sql = $this->pdo->prepare("DELETE FROM imagem_post WHERE id_post = :id_post");
         $sql->bindValue(":id_post",$id_post);
+        $sql->execute();
+        
+        $sql = $this->pdo->prepare("DELETE FROM curtidas WHERE id_post = :id_post");
+        $sql->bindValue(":id_post", $id_post);
         $sql->execute();
     }
     

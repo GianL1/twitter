@@ -7,21 +7,24 @@ use \Models\Usuarios;
 class Perfil extends Model {
 
     public function getPerfil($id_perfil) {
+
+        
+
         $array = array();
 
-        $sql = $this->pdo->prepare("SELECT usuarios.id, usuarios.nome, posts.mensagem, imagem_perfil.url as url_perfil, imagem_post.url as url_post, COUNT(curtidas.id) as curtidas_post, curtidas.id_usuario as id_curtidores
+        $sql = $this->pdo->prepare("SELECT usuarios.id as id_usuario, usuarios.nome, posts.id as id_post, posts.mensagem, imagem_post.url as url_post, 
+        (SELECT COUNT(*) FROM curtidas WHERE curtidas.id_post = posts.id) as curtidas, 
+        (SELECT curtidas.id_usuario FROM curtidas WHERE curtidas.id_post = posts.id ) as id_curtidores 
         FROM usuarios 
-        LEFT JOIN posts ON posts.id_usuario = usuarios.id 
-        LEFT JOIN imagem_perfil ON usuarios.id = imagem_perfil.id_usuario 
-        LEFT JOIN imagem_post ON usuarios.id = imagem_post.id_usuario 
-        LEFT JOIN curtidas ON usuarios.id = curtidas.id_usuario 
-        WHERE usuarios.id = :id_perfil");
+        LEFT JOIN posts ON usuarios.id = posts.id_usuario 
+        LEFT JOIN imagem_post ON usuarios.id = imagem_post.id_usuario WHERE usuarios.id = :id_perfil");
         $sql->bindValue(":id_perfil", $id_perfil);
         $sql->execute();  
 
         if($sql->rowCount() > 0) {
             
             $array = $sql->fetchAll();
+            
 
         }else {
             $array['id_usuario'] = $id_perfil;

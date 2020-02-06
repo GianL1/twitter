@@ -66,6 +66,7 @@ class Usuarios extends Model {
             $sql = $sql->fetch();
             
             $_SESSION['twlg']=$sql['id'];
+            $this->uid = $sql['id'];
 
             return true;
         }else {

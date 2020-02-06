@@ -4,6 +4,7 @@ namespace Controllers;
 
 use \Core\Controller;
 use \Models\Usuarios;
+use \Models\Login;
 
 class LoginController extends Controller {
 
@@ -58,6 +59,7 @@ class LoginController extends Controller {
         }
         $this->loadView('cadastro', $dados);
     }
+    
 
     public function sair(){
         
